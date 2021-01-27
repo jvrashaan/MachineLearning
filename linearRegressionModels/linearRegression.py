@@ -4,7 +4,7 @@ import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 
-class linearRegression(object):
+class linearRegression():
     #Given a data set containing the population of cities and the profit made in those cities for a food truck
     # this class will predict how much profit can be made in other cities with given populations
     def __init__(self):

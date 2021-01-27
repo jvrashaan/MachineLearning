@@ -31,12 +31,12 @@ plt.ylabel('Cost using theta parameters')
 plt.show()
 
 #predict price of house with 1650 sq ft and 3 bedrooms
-price = [theta[0, 0] * 1 + ((1650 - mu[0, 0])/sigma[0, 0]) * theta[1, 0] + ((3 - mu[0, 1])/sigma[0, 1]) * theta[2, 0]]
-#print(price)
+price1 = [theta[0, 0] * 1 + ((1650 - mu[0, 0])/sigma[0, 0]) * theta[1, 0] + ((3 - mu[0, 1])/sigma[0, 1]) * theta[2, 0]]
+#print(price1)
 
 #calculate theta values using normal equations without normalizing data
 X = np.hstack((np.ones((len(X), 1)), X))
 theta = test.normalEquation(X, Y)
 #make prediction with theta values
-price = theta[0] + theta[1] * 1650 + theta[2] * 3
-#print(price)
+price2 = theta[0] + theta[1] * 1650 + theta[2] * 3
+#print(price2)

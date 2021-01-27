@@ -4,7 +4,7 @@ import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 
-class linearRegressionMulti(object):
+class linearRegressionMulti():
     #Given a data set of home features and home prices this class will predict the price of homes
     # given the features home size and number of bedrooms.
     def __init__(self):
