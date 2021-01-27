@@ -13,7 +13,7 @@ Y = test.data[:, -1]
 x_norm, mu, sigma = test.normalizeFeatures(X)
 
 #add column of ones to normalized features
-x_norm = np.hstack((np.ones((47, 1)), x_norm))
+x_norm = np.hstack((np.ones((len(X), 1)), x_norm))
 
 #variables for gradient decent
 alpha = 0.1
@@ -32,4 +32,11 @@ plt.show()
 
 #predict price of house with 1650 sq ft and 3 bedrooms
 price = [theta[0, 0] * 1 + ((1650 - mu[0, 0])/sigma[0, 0]) * theta[1, 0] + ((3 - mu[0, 1])/sigma[0, 1]) * theta[2, 0]]
+#print(price)
+
+#calculate theta values using normal equations without normalizing data
+X = np.hstack((np.ones((len(X), 1)), X))
+theta = test.normalEquation(X, Y)
+#make prediction with theta values
+price = theta[0] + theta[1] * 1650 + theta[2] * 3
 #print(price)

@@ -61,3 +61,8 @@ class linearRegressionMulti(object):
             temp += (cost - Y[i]) ** 2
         
         return temp /(2 * m)
+
+    def normalEquation(self, X, Y):
+        #returns the calculated theta values using normal equations
+
+        return np.matmul(np.matmul(np.linalg.pinv(np.matmul(np.transpose(X), X)), np.transpose(X)), Y)
