@@ -3,9 +3,9 @@ import matplotlib.pyplot as plt
 import numpy as np 
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
-from linearRegression import linearRegression
+from linearRegression import linear_regression
 
-test = linearRegression()
+test = linear_regression()
 #original data plot
 plt.scatter(test.population, test.profit) 
 plt.xlabel('Population of City in 10,000s')
@@ -24,15 +24,15 @@ iterations = 1500
 alpha = 0.01
 
 #compute cost with cost function with theta values as zero
-cost = test.computeCost(X, Y, theta)
+cost = test.compute_cost(X, Y, theta)
 #print("first cost: ", cost[0])
 
 #compute cost with new theta values
-cost = test.computeCost(X, Y, [-1, 2])
+cost = test.compute_cost(X, Y, [-1, 2])
 #print("second cost: ", cost[0])
 
 #minimize the cost function using gradient decent, returns optimal theta values
-[theta, costs] = test.gradientDecent(X, Y, theta, alpha, iterations)
+[theta, costs] = test.gradient_decent(X, Y, theta, alpha, iterations)
 
 #plot linear fit on top of training data
 plt.plot(test.population, np.matmul(X, theta), 'r-')
@@ -60,7 +60,7 @@ J_vals = np.zeros((len(theta0_vals), len(theta1_vals)))
 for i in range(len(theta0_vals)):
     for j in range(len(theta1_vals)):
         t = [theta0_vals[i], theta1_vals[j]]
-        J_vals[i][j] = test.computeCost(X, Y, t)
+        J_vals[i][j] = test.compute_cost(X, Y, t)
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')

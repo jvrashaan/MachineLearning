@@ -4,7 +4,7 @@ import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 
-class linearRegressionMulti():
+class linear_regression_multi():
     #Given a data set of home features and home prices this class will predict the price of homes
     # given the features home size and number of bedrooms.
     def __init__(self):
@@ -13,7 +13,7 @@ class linearRegressionMulti():
         
         self.data = np.array(re.split(',|\n', data)).reshape((47, 3)).astype(np.float)
 
-    def normalizeFeatures(self, X):
+    def normalize_features(self, X):
         #returns a normalized version of X where
         #the mean value of each feature is 0 and the standard deviation
         #is 1.
@@ -29,7 +29,7 @@ class linearRegressionMulti():
         
         return [x_norm, mu, sigma]
 
-    def gradientDecentMulti(self, X, Y, alpha, theta, iterations):
+    def gradient_decent_multi(self, X, Y, alpha, theta, iterations):
         #Performs gradient descent to learn theta
         #updates theta by taking num_iters gradient steps with learning rate alpha
         #m = # of samples
@@ -46,11 +46,11 @@ class linearRegressionMulti():
                 theta[j, 0] -= alpha * (1 / m) * temp[j, 0]
 
             # Save the cost J in every iteration    
-            J_history[i] = self.computeCostMulti(X, Y, theta)
+            J_history[i] = self.compute_cost_multi(X, Y, theta)
         
         return theta, J_history
 
-    def computeCostMulti(self, X, Y, theta):
+    def compute_cost_multi(self, X, Y, theta):
         #Compute cost for linear regression with multiple variables
         #m = # of samples
         m = len(Y)
@@ -62,7 +62,7 @@ class linearRegressionMulti():
         
         return temp /(2 * m)
 
-    def normalEquation(self, X, Y):
+    def normal_equation(self, X, Y):
         #returns the calculated theta values using normal equations
 
         return np.matmul(np.matmul(np.linalg.pinv(np.matmul(np.transpose(X), X)), np.transpose(X)), Y)

@@ -3,14 +3,14 @@ import matplotlib.pyplot as plt
 import numpy as np 
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
-from linearRegressionMulti import linearRegressionMulti
+from linearRegressionMulti import linear_regression_multi
 
-test = linearRegressionMulti()
+test = linear_regression_multi()
 X = test.data[:, :-1]
 Y = test.data[:, -1]
 
 #normalize data and generate mu and sigmas for data
-x_norm, mu, sigma = test.normalizeFeatures(X)
+x_norm, mu, sigma = test.normalize_features(X)
 
 #add column of ones to normalized features
 x_norm = np.hstack((np.ones((len(X), 1)), x_norm))
@@ -21,7 +21,7 @@ num_iterations = 400
 
 #initialize theta and run grad decent to return best cost and theta parameters
 theta = np.zeros((3, 1))
-theta, cost_history = test.gradientDecentMulti(x_norm, Y, alpha, theta, num_iterations)
+theta, cost_history = test.gradient_decent_multi(x_norm, Y, alpha, theta, num_iterations)
 #print(theta)
 
 #plot the cost function
@@ -36,7 +36,7 @@ price1 = [theta[0, 0] * 1 + ((1650 - mu[0, 0])/sigma[0, 0]) * theta[1, 0] + ((3 
 
 #calculate theta values using normal equations without normalizing data
 X = np.hstack((np.ones((len(X), 1)), X))
-theta = test.normalEquation(X, Y)
+theta = test.normal_equation(X, Y)
 #make prediction with theta values
 price2 = theta[0] + theta[1] * 1650 + theta[2] * 3
 #print(price2)

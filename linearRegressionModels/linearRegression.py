@@ -4,7 +4,7 @@ import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 
-class linearRegression():
+class linear_regression():
     #Given a data set containing the population of cities and the profit made in those cities for a food truck
     # this class will predict how much profit can be made in other cities with given populations
     def __init__(self):
@@ -16,7 +16,7 @@ class linearRegression():
         self.population = [float(data[x]) for x in range(0, len(data), 2)]
         self.profit = [float(data[y]) for y in range(1, len(data), 2)]
 
-    def computeCost(self, X, Y, theta):
+    def compute_cost(self, X, Y, theta):
         #computes the cost of using theta as the
         #parameter for linear regression to fit the data points in X and y
         m = len(Y)
@@ -28,7 +28,7 @@ class linearRegression():
         
         return temp/ (2 * m)
 
-    def gradientDecent(self, X, Y, theta, alpha, iterations):
+    def gradient_decent(self, X, Y, theta, alpha, iterations):
         #minimizes the cost function given parameters theta.
         m = len(Y)
         costs = np.zeros((iterations, 1))
@@ -43,6 +43,6 @@ class linearRegression():
             theta[0] = theta[0] - alpha * (1 / m) * temp1
             theta[1] = theta[1] - alpha * (1 / m) * temp2
             #save cost on every iteration
-            costs[i] = self.computeCost(X, Y, theta)
+            costs[i] = self.compute_cost(X, Y, theta)
         
         return [theta, costs]
