@@ -136,7 +136,7 @@ class logistic_regression():
         # initial guess for x0 and y0
         x0 = np.mean(x)
         y0 = np.mean(y)
-        params = np.zeros(2 + 2*(n+1))
+        params = np.zeros(2 + 2 * (n+1))
 
         params[0] = x0
         params[1] = y0
