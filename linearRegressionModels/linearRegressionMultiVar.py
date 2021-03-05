@@ -3,8 +3,9 @@ import matplotlib.pyplot as plt
 import numpy as np 
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
+from scipy.io import loadmat
 
-class linear_regression_multi():
+class linear_regression_multi_var():
     #Given a data set of home features and home prices this class will predict the price of homes
     # given the features home size and number of bedrooms.
     def __init__(self):
@@ -12,6 +13,10 @@ class linear_regression_multi():
             data = f.read()
         
         self.data = np.array(re.split(',|\n', data)).reshape((47, 3)).astype(np.float)
+
+        matrix = loadmat("ex5data1.mat")
+        self.data2 = np.array(matrix["X"]).reshape((12, 1)).astype(np.float)
+        self.labels = np.array(matrix["y"]).reshape((12, 1)).astype(np.float)
 
     def normalize_features(self, X):
         #returns a normalized version of X where
@@ -33,6 +38,7 @@ class linear_regression_multi():
         #Performs gradient descent to learn theta
         #updates theta by taking num_iters gradient steps with learning rate alpha
         #m = # of samples
+        # does not use regulization
         m = len(Y)
         J_history = np.zeros((iterations, 1))
         features = len(X[0])
@@ -53,6 +59,7 @@ class linear_regression_multi():
     def compute_cost_multi(self, X, Y, theta):
         #Compute cost for linear regression with multiple variables
         #m = # of samples
+        # does not use regulization
         m = len(Y)
 
         temp = 0
@@ -66,3 +73,27 @@ class linear_regression_multi():
         #returns the calculated theta values using normal equations
 
         return np.matmul(np.matmul(np.linalg.pinv(np.matmul(np.transpose(X), X)), np.transpose(X)), Y)
+    
+    def compute_cost_multi_reg(self, X, Y, theta, Lambda):
+        #regularized cost function compute cost and gradient
+
+        m = len(X)
+        X = np.hstack((np.ones((m, 1)), X))
+        n = len(X[0])
+        cost = sum(np.power(((X @ theta) - Y), 2))/ (2 * m) + ((Lambda / (2 * m)) * sum(np.power(theta[1:], 2)))
+        
+        temp = np.zeros((n, 1))
+        for i in range(m):
+            for j in range(n):
+                temp[j] = temp[j] + (((np.transpose(theta) @ X[i]) - Y[i]) * X[i, j])
+        
+        grad = np.zeros(theta.shape)
+        for i in range(n):
+            if i > 1:
+                grad[i] = temp[i] / m + (Lambda/m * theta[i])
+            else:
+                grad[i] = temp[i] / m
+        
+        return cost, grad
+            
+    

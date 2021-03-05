@@ -3,9 +3,9 @@ import matplotlib.pyplot as plt
 import numpy as np 
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
-from linearRegressionMulti import linear_regression_multi
+from linearRegressionMultiVar import linear_regression_multi_var
 
-test = linear_regression_multi()
+test = linear_regression_multi_var()
 X = test.data[:, :-1]
 Y = test.data[:, -1]
 
