@@ -5,7 +5,6 @@ from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 import math
 from numpy import sin, cos, pi
-from scipy.optimize import leastsq, minimize, fmin_cg, fmin_bfgs
 from scipy.io import loadmat
 
 class neural_network():

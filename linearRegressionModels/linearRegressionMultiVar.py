@@ -15,8 +15,12 @@ class linear_regression_multi_var():
         self.data = np.array(re.split(',|\n', data)).reshape((47, 3)).astype(np.float)
 
         matrix = loadmat("ex5data1.mat")
-        self.data2 = np.array(matrix["X"]).reshape((12, 1)).astype(np.float)
-        self.labels = np.array(matrix["y"]).reshape((12, 1)).astype(np.float)
+        self.X = matrix["X"]
+        self.Y = matrix["y"]
+        self.Xtest = matrix["Xtest"]
+        self.Ytest = matrix["ytest"]
+        self.Xval = matrix["Xval"]
+        self.Yval = matrix["yval"]
 
     def normalize_features(self, X):
         #returns a normalized version of X where
@@ -78,7 +82,6 @@ class linear_regression_multi_var():
         #regularized cost function compute cost and gradient
 
         m = len(X)
-        X = np.hstack((np.ones((m, 1)), X))
         n = len(X[0])
         cost = sum(np.power(((X @ theta) - Y), 2))/ (2 * m) + ((Lambda / (2 * m)) * sum(np.power(theta[1:], 2)))
         
@@ -95,5 +98,42 @@ class linear_regression_multi_var():
                 grad[i] = temp[i] / m
         
         return cost, grad
+    
+    def gradient_decent_multi_reg(self, X, Y, theta, alpha, num_iters, Lambda):
+        #computes optimal values for theta using regularized cost function
+
+        m = len(Y)
+        J_history =[]
+        
+        for i in range(num_iters):
+            cost, grad = self.compute_cost_multi_reg(X, Y, theta, Lambda)
+            theta = theta - (alpha * grad)
+            J_history.append(cost)
+    
+        return theta , J_history
+
+    def learning_curve(self, X, Y, Xval, Yval, Lambda=0):
+        #Generates the train and cross validation set errors needed 
+        #to plot a learning curve. Lambda is set to zero to obtain errors.
+        m = len(X)
+        n = len(X[0])
+        error_train = []
+        error_val = []
+
+        for i in range(1,m+1):
+            theta = self.gradient_decent_multi_reg(X[0:i,:], Y[0:i,:], np.zeros((n,1)), 0.001, 3000, Lambda)[0]
+            error_train.append(self.compute_cost_multi_reg(X[0:i,:], Y[0:i,:], theta, Lambda)[0])
+            error_val.append(self.compute_cost_multi_reg(Xval, Yval, theta, Lambda)[0])
             
+        return error_train, error_val
+
+    def poly_features(self, X, p):
+        #Takes a data matrix X (size m x 1) and maps each example into its polynomial features where 
+        #X_poly(i, :) = [X(i) X(i).^2 X(i).^3 ...  X(i).^p]
+    
+        for i in range(2, p + 1):
+            X = np.hstack((X ,(X[:,0] ** i)[:,np.newaxis]))
+        
+        return X
+        
     

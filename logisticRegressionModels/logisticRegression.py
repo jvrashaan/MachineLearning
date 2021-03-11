@@ -44,7 +44,6 @@ class logistic_regression():
 
         for i in range(m):
             for j in range(f):
-                
                 temp[j, 0] += ((self.sigmoid(np.matmul(np.transpose(theta), np.transpose(X[i, :])).reshape(1, 1)) - Y[i]) * X[i, j])
             
         for i in range(f):
